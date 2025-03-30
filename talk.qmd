@@ -1,0 +1,406 @@
+---
+title:  From Copilot to a team of AI software engineers
+author:
+    - Loïc Gouarin
+format:
+  revealjs:
+    css: css/light.css
+    slide-number: true
+resources:
+  - videos/**
+highlight-style: github
+footer: ia4dev-2025 - <img width="5%" src="figures/by-sa.png"/> - 1 April 2025
+---
+
+## {.no-title .center}
+```{=html}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+```
+
+:::{.row}
+::::{.col-4 .text-center}
+<img class="m-0" src="figures/loic_small.png">
+::::
+::::{.col .align-self-center .lh-lg}
+- Research engineer in scientific computing at CNRS
+- Co-leader of the HPC@Maths team
+- Member of the groupe Calcul board
+- Developer of open-source software
+::::
+:::
+
+:::{.row}
+::::{.col-4}
+::::
+::::{.col}
+:::::{.row .mt-5 .text-center}
+::::::{.col .align-self-center}
+<img width="50%" src="figures/samurai.png">
+::::::
+::::::{.col .align-self-center}
+<img width="70%" src="figures/pylbm_logo.png">
+::::::
+::::::{.col .align-self-center}
+ <img width="70%" src="figures/scopi.png">
+::::::
+:::::
+::::
+:::
+
+## Some comments before we start
+
+:::{.lh-lg .center-page-vertically}
+- I'm not an expert of LLM and their construction.
+- The world of LLM is vast and the field of possibilities almost infinite.
+- Some points may be wrong and lack precision.
+- The learning curve is steep.
+- I'm a baby of a one month and a half in this world.
+:::
+
+## What can you do with GitHub Copilot ?
+
+:::{.lh-lg .center-page-vertically}
+- Code completion as you type <span class="fragment">(2,000 intelligent code completions a month)</span>
+- Chat discussion to explain code, to write tests or documentation, ... <span class="fragment">(50 Copilot Chat messages a month)</span>
+- Use the open files and your GitHub repositories as a knowledge base
+- Web search and other agents on the marketplace
+- Two models available: Anthropic’s Claude 3.5 Sonnet or OpenAI’s GPT-4o
+:::
+
+:::{.notes}
+https://github.blog/ai-and-ml/github-copilot/what-can-github-copilot-do-examples/
+
+free since December 2024 for everyone. You can also modify multiple files at once.
+You have more models if you pay.
+
+You can also add various extension in VSCode to search on the web for example. (see https://github.com/marketplace?page=2&type=apps&copilot_app=true)
+
+The problem here is that the LLM models are not free and that you have limited resources to use them, even if their number may seem sufficient for personal use.
+
+Can we have the same functionality for free ?
+:::
+
+## The Copilot alternatives
+
+::::{.center-page-vertically}
+:::{.row}
+::::{.col .align-self-center .text-center}
+<a href="https://www.augmentcode.com/" target="_blank">
+  <img width="40%" src="figures/augment_logo.png">
+</a>
+::::
+::::{.col .align-self-center .text-center}
+<a href="https://continue.dev/" target="_blank">
+  <img width="100%" src="figures/continue_logo.png">
+</a>
+::::
+:::
+::::
+
+:::{.notes}
+https://www.augmentcode.com/blog/rethinking-llm-inference-why-developer-ai-needs-a-different-approach
+In their article, they said that context is everything for coding and I think it's completely true. The context is your files, your dependencies, the call-sites, ... If we put all this context in the prompt, the token numbers will be so huge that it would be impossible to use it or would greatly slow down the inference of LLM. But what we expect is low latency.They said that they are expert to retrieve the most relevant context.
+It's not a general use of LLM when we code. We have a lot of input context and not necessarily a long output.
+They said that they serve requests with 10k input tokens to Llama3 70B with a TTFT of less than 300ms (3x faster).
+Their infrastructure is composed by NVIDIA H100.
+You can easily add software or library documentation and the code completion is smart enough to suggest the next steps. But you can't add your LLM model.
+
+https://blog.continue.dev/continue-1-0/
+continue offers the same functionality as Copilot but you can specify which LLM models you want to use for the different tasks: chat, completion, embeddings, ... You can also add your own documentation and build your RAG.
+
+:::
+
+## {.center .no-title .text-center}
+
+### What models do I need to choose to help me develop my software ? {.my-5}
+
+### Do I have enough resources to use them ? {.my-5 .fragment}
+
+### What are the limitations of these models ? {.my-5 .fragment}
+
+:::{.notes}
+
+There is a lot of available models and it's not easy to choose the right one.
+
+The augment code blog tells us that the inference is made on 4 H100 for a small model of 7B.
+
+The models are for generic questions and know nothing about your software.
+
+:::
+
+## Use open source models
+
+:::{.row}
+::::{.col .align-self-center .text-center}
+<a href="https://ollama.com/" target="_blank">
+![](figures/ollama_website.png){width=80%}
+
+Ollama website
+</a>
+::::
+::::{.col .align-self-center .text-center}
+<a href="https://huggingface.co/" target="_blank">
+![](figures/huggingface_website.png){width=80%}
+
+Hugging Face website
+</a>
+::::
+:::
+
+## Learderboards {.text-center}
+
+![](figures/livecodebench_explain.png){width=60%}
+
+<a href="https://arxiv.org/pdf/2403.07974" target="_blank"> LiveCodeBench: https://arxiv.org/pdf/2403.07974 </a>
+
+## Learderboards
+
+:::{.row .text-center}
+:::
+:::{.row .text-center}
+::::{.col .align-self-center}
+![](figures/livecodebench.png)
+::::
+::::{.col .align-self-center}
+![](figures/livecodebench_2.png){width=80%}
+
+::::: {.callout-note icon=false title="Other leaderboards" .fragment}
+- Code evaluation
+  - [BigCode's Models Leaderboard](https://huggingface.co/spaces/bigcode/bigcode-models-leaderboard)
+  - [BigCode's BigCodeBench](https://huggingface.co/spaces/bigcode/bigcodebench-leaderboard)
+  - [Meta's CyberSecEval](https://huggingface.co/spaces/facebook/CyberSecEval)
+- Mathematics abilities
+  - [NPHardEval](https://huggingface.co/spaces/NPHardEval/NPHardEval-leaderboard)
+:::::
+::::
+:::
+
+:::{.notes}
+Look at the article to explain the results. They seem really bad.
+:::
+
+## Can I use LLM models locally ?
+
+<video width="100%" controls>
+  <source src="figures/LLM_time_execution.mov" type="video/mp4">
+</video>
+
+:::{.row}
+::::{.col .align-self-center .text-center}
+1 GPU A100 - Juliet
+::::
+::::{.col .align-self-center .text-center}
+MacBook Pro M1
+::::
+:::
+
+## Msty
+
+:::{.row .center-page-vertically}
+<!-- :::{.row } -->
+::::{.col-3 .align-self-center .text-center}
+<a href="https://msty.app/" target="_blank">
+![](figures/msty_logo.jpg){width=80%}
+</a>
+::::
+::::{.col .align-self-center}
+:::{.lh-lg}
+- **Offline-first, online-ready**
+
+  Works seamlessly offline while supporting online models.
+- **Parallel multiverse chats**
+
+  Compare responses from different AI models in real-time.
+- **Unified access to models**
+
+  Supports models from Hugging Face, Ollama, and Open Router.
+- **Prompt management**
+
+  Offers a library of prompts and allows custom additions.
+- **Ultimate privacy**
+
+  No personal data leaves the user's machine
+:::
+::::
+:::
+
+## But finally what do I need ?
+
+:::{.row .align-items-center}
+::::{.col}
+- To have an AI assistant that knows
+  - the programming language I use
+  - the documentation of my third-party libraries
+  - my software and the mathematics behind it
+- Specialized models for each step of development
+- Not to iterate over LLM models again and again
+- To have a memory of what was done
+::::
+::::{.col .fragment}
+![](figures/ai_team.jpg){width=100%}
+::::
+:::
+
+## What we call an agent ?{.text-center}
+
+![](figures/simple-agent.svg){width=80%}
+
+## {.center .no-title .text-center}
+
+![](figures/software-team.svg){width=100%}
+
+## Use case: depixelizing {.text-center}
+
+![](figures/depixelizing.png){width=80%}
+
+## Use case: Hilbert curve{.text-center}
+
+:::{.row}
+::::{.col .align-self-center .text-center}
+```{.python code-line-numbers="false"}
+def rot(n, x, y, rx, ry):
+    if ry == 0:
+        if rx == 1:
+            x = n - 1 - x
+            y = n - 1 - y
+        return y, x
+    return x, y
+
+def d2xy(n: int, d: int):
+    t = d
+    x = y = 0
+    s = 1
+
+    while (s < n):
+        rx = 1 & (t//2)
+        ry = 1 & (t ^ rx)
+        x, y = rot(s, x, y, rx, ry)
+        x += s * rx
+        y += s * ry
+        t = t//4
+        s *= 2
+    return x, y
+
+if __name__ == "__main__":
+  x = y = 0
+  n = 8
+  coords = []
+  for i in range(1<<n):
+      coords.append(d2xy(1<<n, i))
+```
+::::
+::::{.col-8 .align-self-center .text-center}
+![](figures/hilbert_curve.png){width=90%}
+::::
+:::
+
+## LLM output examples
+
+# How can I enrich a generic LLM model ?
+
+## {.center .no-title .text-center}
+
+![](figures/fine-tuning.svg){width=60%}
+
+## {.center .no-title .text-center}
+
+![](figures/rag.svg){width=80%}
+
+:::{.notes}
+The problem with RAG is that you only have a chunk of the relevant data. You can take the neighbors if you have stored the data using an ID but it can still be not enough.
+CAG seems to eliminate retrieval latency or mitigate retrieval errors.
+:::
+
+## {.center .no-title .text-center}
+
+![](figures/CAG.svg){width=80%}
+
+<!-- *credit: [https://arxiv.org/pdf/2412.15605v1](https://arxiv.org/pdf/2412.15605v1)* -->
+
+## {.center .no-title .text-center}
+
+:::{.row}
+::::{.col .align-self-center .text-center}
+![](figures/tools.png){width=90%}
+::::
+::::{.col .align-self-center .text-center .lh-lg}
+- Web search (Tavili, DuckDuckGo, Brave, ...)
+- Python script execution
+- GitHub interactions
+- ...
+::::
+:::
+
+## From scratch
+
+:::{.row}
+::::{.col .align-self-center .text-center}
+![](figures/langchain_logo.png){.my-5}
+![](figures/pydantic_logo.svg){.my-5}
+::::
+::::{.col .align-self-center .text-center}
+![](figures/langgraph_logo.svg){.my-5}
+![](figures/pydanticai_logo.svg){.my-5}
+::::
+:::
+
+## The multi agent tools
+
+:::{.lh-lg}
+- [CrewAI](https://www.crewai.com) is a lean, lightning-fast Python framework built entirely from scratch—completely independent of LangChain or other agent frameworks.
+- [Langflow](https://www.langflow.org/) is a new, visual framework for building multi-agent and RAG applications. It is open-source, Python-powered, fully customizable, and LLM and vector store agnostic.
+- [AutoAgent](https://github.com/HKUDS/AutoAgent) is a Fully-Automated and highly Self-Developing framework that enables users to create and deploy LLM agents through Natural Language Alone.
+- [SmolAgents](https://huggingface.co/docs/smolagents/index) is the simplest framework out there to build powerful agents!
+- ...
+:::
+
+## {.no-title .center .text-center}
+
+<a href="https://www.anthropic.com/news/model-context-protocol" target="_blank">
+![](figures/mcp.webp){width=80%}
+</a>
+
+Model Context Protocol
+
+## So, what did I learn?
+
+:::{.lh-lg}
+- The context is probably the most important.
+- XML can help you structure your output messages.
+- It's not that simple to get the tools and the LLM to talk to each other.
+- There are so many software packages out there that it's hard to choose the right one.
+- I won't be getting a team of AI assistants working on my software developments any time soon.
+:::
+
+:::{.text-center .color .mt-4}
+But I'm not done yet !!
+:::
+
+
+## References
+
+:::{.lh-lg}
+- More about RAG
+
+  [Advanced RAG Techniques: Elevating Your Retrieval-Augmented Generation Systems](https://github.com/NirDiamant/RAG_Techniques)
+
+- More about CAG
+
+  [Don’t Do RAG: When Cache-Augmented Generation is All You Need for Knowledge Tasks](https://arxiv.org/pdf/2412.15605v1)
+
+- If there is only one article that you need to read
+
+  [A survey on LLM-based multi-agent systems: workflow, infrastructure, and challenges](https://link.springer.com/content/pdf/10.1007/s44336-024-00009-2.pdf)
+
+- Prompt examples on various topics
+
+  [fabric is an open-source framework for augmenting humans using AI](https://github.com/danielmiessler/fabric)
+:::
+
+## {.center .no-title .text-center}
+
+### Thank you for your attention
+
+### And thanks to MesoNET
+### especially the ROMEO team to let me use their computing resources !
