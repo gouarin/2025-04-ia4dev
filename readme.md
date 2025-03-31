@@ -1,1 +1,1 @@
-https://gouarin.github.io/2025-02-opennumdef-talk/
+https://gouarin.github.io/2025-04-ia4dev/
