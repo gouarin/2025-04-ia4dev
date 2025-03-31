@@ -380,7 +380,8 @@ But I'm not done yet !!
 
 ## References
 
-:::{.lh-lg}
+
+:::{.lh-lg .center-page-vertically}
 - More about RAG
 
   [Advanced RAG Techniques: Elevating Your Retrieval-Augmented Generation Systems](https://github.com/NirDiamant/RAG_Techniques)
