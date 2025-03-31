@@ -5,7 +5,7 @@ author:
 format:
   revealjs:
     css: css/light.css
-    slide-number: true
+    # slide-number: true
 resources:
   - videos/**
 highlight-style: github
@@ -150,7 +150,7 @@ Hugging Face website
 
 ## Learderboards {.text-center}
 
-![](figures/livecodebench_explain.png){width=60%}
+![](figures/livecodebench_explain.png){height=30%}
 
 <a href="https://arxiv.org/pdf/2403.07974" target="_blank"> LiveCodeBench: https://arxiv.org/pdf/2403.07974 </a>
 
@@ -163,7 +163,7 @@ Hugging Face website
 ![](figures/livecodebench.png)
 ::::
 ::::{.col .align-self-center}
-![](figures/livecodebench_2.png){width=80%}
+![](figures/livecodebench_2.png){width=60%}
 
 ::::: {.callout-note icon=false title="Other leaderboards" .fragment}
 - Code evaluation
@@ -295,8 +295,6 @@ if __name__ == "__main__":
 ::::
 :::
 
-## LLM output examples
-
 # How can I enrich a generic LLM model ?
 
 ## {.center .no-title .text-center}
@@ -325,7 +323,7 @@ CAG seems to eliminate retrieval latency or mitigate retrieval errors.
 ![](figures/tools.png){width=90%}
 ::::
 ::::{.col .align-self-center .text-center .lh-lg}
-- Web search (Tavili, DuckDuckGo, Brave, ...)
+- Web search (Tavily, DuckDuckGo, Brave, ...)
 - Python script execution
 - GitHub interactions
 - ...
@@ -355,13 +353,7 @@ CAG seems to eliminate retrieval latency or mitigate retrieval errors.
 - ...
 :::
 
-## {.no-title .center .text-center}
-
-<a href="https://www.anthropic.com/news/model-context-protocol" target="_blank">
-![](figures/mcp.webp){width=80%}
-</a>
-
-Model Context Protocol
+# Some demos
 
 ## So, what did I learn?
 
@@ -377,6 +369,13 @@ Model Context Protocol
 But I'm not done yet !!
 :::
 
+## {.no-title .center .text-center}
+
+<a href="https://www.anthropic.com/news/model-context-protocol" target="_blank">
+![](figures/mcp.webp){width=80%}
+</a>
+
+Model Context Protocol
 
 ## References
 
