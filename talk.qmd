@@ -129,7 +129,7 @@ The models are for generic questions and know nothing about your software.
 
 :::
 
-## Use open source models
+## Where to find LLM models ?
 
 :::{.row}
 ::::{.col .align-self-center .text-center}
