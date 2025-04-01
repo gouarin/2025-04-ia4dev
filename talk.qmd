@@ -404,3 +404,8 @@ Model Context Protocol
 
 ### And thanks to MesoNET
 ### especially the ROMEO team to let me use their computing resources !
+
+<br>
+[https://github.com/gouarin/2025-04-ia4dev](https://github.com/gouarin/2025-04-ia4dev)
+
+[https://github.com/gouarin/llm4code](https://github.com/gouarin/llm4code)
